@@ -1,40 +1,35 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import Term from "./term";
-
-const staticTerms = [
-  {
-    term: "abyssal plain",
-    definition:
-      "The ocean floor offshore from the continental margin, usually very flat with aslight slope.",
-  },
-  {
-    term: "accrete",
-    definition:
-      "v. To add terranes (small land masses or pieces of crust) to another, usually larger, land mass.",
-  },
-];
+import { TermContext } from "../Context";
 
 const TermList = () => {
-  const [data, setData] = useState([]);
-  const [status, setStatus] = useState("");
+  let [data, status] = useContext(TermContext);
+  // useEffect(() => {
+  //   fetchTerms();
+  // }, []);
 
-  const fetchData = async () => {
-    try {
-      const data = await fetch("/terms");
-      console.log(data.body);
-      // setData(data.body);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const [data, setData] = useState([]);
+  // const [status, setStatus] = useState(false);
 
-  useEffect(() => {
-    fetchData();
-  }, [status]);
+  // const fetchTerms = () => {
+  //   setStatus(false);
 
-  const terms = data.map((term, index) => <Term data={term} key={index} />);
+  //   fetch("/terms")
+  //     .then((res) => res.json())
+  //     .then((data) => setData(data.terms))
+  //     .catch((err) => console.log(err));
+  //   setStatus(true);
+  // };
+  let terms;
+  if (data) {
+    terms = data.map((term, index) => <Term data={term} key={index} />);
+  }
 
-  return <div className="content container">{terms}</div>;
+  return (
+    <div className="content container">
+      {status ? terms : <h3>Loading...</h3>}
+    </div>
+  );
 };
 
 export default TermList;

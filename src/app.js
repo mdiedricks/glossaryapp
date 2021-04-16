@@ -6,21 +6,26 @@ const termRouter = require("./routers/termRouter");
 const app = express();
 
 const whitelist = [
-  "https://evening-atoll-30144.herokuapp.com/",
   "http://localhost:3000",
+  "http://localhost:8080",
+  "https://evening-atoll-30144.herokuapp.com/",
 ];
 const corsOptions = {
-  origin: (origin, callback) => {
-    console.log(`Origin of requrest ${origin}`);
-    if (whitelist.indexOf(origin) !== -1 || !origin) {
-      console.log("Origin accepted");
-    } else {
-      callback(new Error("Now allowed by CORS"));
-    }
-  },
+  origin: true,
+  // origin: function (origin, callback) {
+  //   console.log(`Origin of request ${origin}`);
+  //   if (whitelist.indexOf(origin) !== -1 || !origin) {
+  //     console.log("Origin accepted");
+  //     callback(null, true);
+  //   } else {
+  //     console.log("Origin rejected");
+  //     callback(new Error("Now allowed by CORS"));
+  //   }
+  // },
 };
 
 app.use(cors(corsOptions));
+// app.use(cors());
 app.use(express.json()); // Automatically parse JSON
 app.use(termRouter);
 

@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const Term = require("../models/term");
 
-// * Create term
 router.post("/terms", async (req, res) => {
   const term = new Term(req.body);
 
@@ -14,24 +13,23 @@ router.post("/terms", async (req, res) => {
   }
 });
 
-// * Get terms
 router.get("/terms", async (req, res) => {
   try {
-    const terms = await Term.find({});
+    const terms = await Term.find({}).sort({ term: "asc" });
     res.send({ terms });
   } catch (error) {
     res.status(400).send(error);
   }
 });
 
-// * Patch term
-router.patch("/terms/:id", async (req, res) => {
+router.patch("/terms", async (req, res) => {
   const updatedTerm = req.body;
 
   try {
-    const term = await Term.findById(req.params.id);
+    const term = await Term.findById(updatedTerm._id);
     term.term = updatedTerm.term;
     term.definition = updatedTerm.definition;
+    term.favourite = updatedTerm.favourite;
     await term.save();
     res.send(term);
   } catch (error) {
@@ -39,12 +37,11 @@ router.patch("/terms/:id", async (req, res) => {
   }
 });
 
-// * Delete term
-router.delete("/terms/:id", async (req, res) => {
-  const termId = req.params.id;
-
+router.delete("/terms", async (req, res) => {
+  const termId = req.body._id;
   try {
     const term = await Term.findById(termId);
+    console.log(term);
     await term.remove();
     res.send(term);
   } catch (error) {

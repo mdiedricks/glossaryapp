@@ -11,6 +11,9 @@ const termSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  favourite: {
+    type: Boolean,
+  },
 });
 
 const Term = mongoose.model("Term", termSchema);

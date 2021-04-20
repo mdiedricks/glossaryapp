@@ -49,6 +49,9 @@ button {
 button:hover {
   background-color: #c05772;
 }
+button.toggle {
+  background-color: #a73955;
+}
 .container {
   margin: 0rem auto 1rem;
   max-width: 500px;
@@ -61,4 +64,17 @@ button:hover {
 .fav {
   height: 1rem;
   margin-left: 1rem;
+}
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.form-btn {
+  text-align: center;
+}
+.ctrl-panel {
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem;
 }

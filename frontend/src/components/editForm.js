@@ -37,17 +37,9 @@ const EditForm = ({ editTerm, deactivateEdit }) => {
 
   return (
     <div className="container content">
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
+      <div className="form-header">
         <h4>Update Term</h4>
-        <button onClick={() => deactivateEdit()} className="small">
-          x
-        </button>
+        <button onClick={() => deactivateEdit()}>x</button>
       </div>
       <form onSubmit={updateTerm}>
         <label htmlFor="term">Term</label>
@@ -70,7 +62,7 @@ const EditForm = ({ editTerm, deactivateEdit }) => {
           value={def}
         ></textarea>
         <br />
-        <div style={{ textAlign: "center" }}>
+        <div className="form-btn">
           <button>Submit</button>
         </div>
       </form>

@@ -2,7 +2,7 @@ import React from "react";
 import starGold from "../img/star-gold.png";
 import starBlack from "../img/star-blk.png";
 
-function Term({ term, activateEdit }) {
+function Term({ term, activateEdit, triggerUpdate }) {
   const deleteTerm = async (term) => {
     console.log(term._id);
     const res = await fetch("/terms", {
@@ -12,7 +12,7 @@ function Term({ term, activateEdit }) {
       },
       body: JSON.stringify(term),
     });
-    window.location.reload();
+    triggerUpdate();
     return res.json();
   };
 
@@ -27,7 +27,7 @@ function Term({ term, activateEdit }) {
       },
       body: JSON.stringify(updatedTerm),
     });
-    window.location.reload();
+    triggerUpdate();
     return res.json();
   };
 
@@ -35,15 +35,14 @@ function Term({ term, activateEdit }) {
     <div>
       <div style={{ display: "flex", alignItems: "center" }}>
         <h4>{term.term}</h4>
-        {term.favourite && (
+        {term.favourite ? (
           <img
             className="fav"
             src={starGold}
             onClick={() => updateFavourite(term)}
             alt="favourited"
           />
-        )}
-        {!term.favourite && (
+        ) : (
           <img
             className="fav"
             src={starBlack}

@@ -13,6 +13,7 @@ const TermForm = ({ deactivateAdd }) => {
   };
 
   const addTerm = async (e) => {
+    e.preventDefault();
     const newTerm = {
       term: term,
       definition: def,
@@ -25,18 +26,13 @@ const TermForm = ({ deactivateAdd }) => {
       },
       body: JSON.stringify(newTerm),
     });
+    deactivateAdd();
     return res.json();
   };
 
   return (
     <div className="container content">
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
+      <div className="form-header">
         <h4>Create Term</h4>
         <button onClick={() => deactivateAdd()} className="small">
           x
@@ -63,7 +59,7 @@ const TermForm = ({ deactivateAdd }) => {
           value={def}
         ></textarea>
         <br />
-        <div style={{ textAlign: "center" }}>
+        <div className="form-btn">
           <button>Submit</button>
         </div>
       </form>

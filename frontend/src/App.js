@@ -3,6 +3,7 @@ import "./App.css";
 import Term from "./components/term";
 import TermForm from "./components/termForm";
 import EditForm from "./components/editForm";
+import Header from "./components/header";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -10,11 +11,12 @@ function App() {
   const [editing, setEditing] = useState(false);
   const [terms, setTerms] = useState([]);
   const [favOnly, setFavOnly] = useState(false);
+  const [update, setUpdate] = useState(false);
   const [editTerm, setEditTerm] = useState({});
 
   useEffect(() => {
     fetchTerms();
-  }, [editing]);
+  }, [editing, adding, update]);
 
   const fetchTerms = () => {
     setLoading(true);
@@ -45,17 +47,23 @@ function App() {
   const toggleFavourites = () => {
     setFavOnly(!favOnly);
   };
+  const triggerUpdate = () => {
+    setUpdate(!update);
+  };
 
   return (
     <>
-      <header className="nav">
-        <h2>Glossary App</h2>
-      </header>
-      <div
-        style={{ display: "flex", justifyContent: "center", padding: "0.5rem" }}
-      >
+      <Header />
+      <div className="ctrl-panel">
         <button onClick={() => setAdding(true)}>Add Term</button>
-        <button onClick={toggleFavourites}>Fav Only</button>
+        {!favOnly && (
+          <button onClick={toggleFavourites}>Show Favourites</button>
+        )}
+        {favOnly && (
+          <button className="toggle" onClick={toggleFavourites}>
+            Hide Favourites
+          </button>
+        )}
       </div>
       {adding && <TermForm deactivateAdd={deactivateAdd}></TermForm>}
       {editing && (
@@ -65,22 +73,29 @@ function App() {
         ></EditForm>
       )}
 
-      {/* <div className="filter">Filter</div> */}
       <div className="content container">
         {loading && <h3>Loading...</h3>}
-
         {!loading &&
           !favOnly &&
           terms.map((item) => (
-            <Term term={item} key={item._id} activateEdit={activateEdit} />
+            <Term
+              term={item}
+              key={item._id}
+              activateEdit={activateEdit}
+              triggerUpdate={triggerUpdate}
+            />
           ))}
-
         {!loading &&
           favOnly &&
           terms
             .filter((item) => item.favourite === true)
             .map((item) => (
-              <Term term={item} key={item._id} activateEdit={activateEdit} />
+              <Term
+                term={item}
+                key={item._id}
+                activateEdit={activateEdit}
+                triggerUpdate={triggerUpdate}
+              />
             ))}
       </div>
     </>

@@ -41,7 +41,6 @@ router.delete("/terms", async (req, res) => {
   const termId = req.body._id;
   try {
     const term = await Term.findById(termId);
-    console.log(term);
     await term.remove();
     res.send(term);
   } catch (error) {

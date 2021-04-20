@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../App.css";
 
-function AddTerm() {
+const TermForm = ({ deactivateAdd }) => {
   const [term, setTerm] = useState("");
   const [def, setDef] = useState("");
 
@@ -12,11 +12,12 @@ function AddTerm() {
     setDef(e.target.value);
   };
 
-  const createTerm = async () => {
+  const addTerm = async (e) => {
     const newTerm = {
       term: term,
       definition: def,
     };
+
     const res = await fetch("/terms", {
       method: "POST",
       headers: {
@@ -29,11 +30,23 @@ function AddTerm() {
 
   return (
     <div className="container content">
-      <h4>Create Term</h4>
-      <form onSubmit={createTerm}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <h4>Create Term</h4>
+        <button onClick={() => deactivateAdd()} className="small">
+          x
+        </button>
+      </div>
+      <form onSubmit={addTerm}>
         <label htmlFor="term">Term</label>
         <br />
         <input
+          name="term"
           type="text"
           id="term"
           onChange={termHandler}
@@ -43,6 +56,7 @@ function AddTerm() {
         <label htmlFor="definition">Definition</label>
         <br />
         <textarea
+          name="definition"
           type="text"
           id="definition"
           onChange={defHandler}
@@ -55,6 +69,6 @@ function AddTerm() {
       </form>
     </div>
   );
-}
+};
 
-export default AddTerm;
+export default TermForm;

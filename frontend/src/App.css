@@ -38,19 +38,27 @@ hr {
 }
 button {
   appearance: none;
-  padding: 0.7rem 1rem;
+  padding: 0.6rem 1rem;
+  margin: 0 0.2rem;
   background-color: #e72656;
   color: white;
   font-weight: 600;
   border-radius: 5px;
   border: none;
 }
+button:hover {
+  background-color: #c05772;
+}
 .container {
-  margin: 0rem auto;
+  margin: 0rem auto 1rem;
   max-width: 500px;
 }
 .content {
   padding: 0rem 1rem 1rem;
   border-radius: 5px;
   border: 1px solid #e72656;
+}
+.fav {
+  height: 1rem;
+  margin-left: 1rem;
 }
